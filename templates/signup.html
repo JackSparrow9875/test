@@ -3,5 +3,30 @@
 {% block title %} Signup {% endblock %}
 
 {% block content %}
+{% for message in get_flashed_messages() %}
+    {{ message }}
+{% endfor %}
 
+<div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <form action="{{ url_for('signup') }}" method="POST">
+        <div class="mb-3">
+        <label for="name" class="form-label">Enter Your Name</label>
+        <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Enter Your Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+        <label for="password1" class="form-label">Enter a Password</label>
+        <input type="password" class="form-control" id="password1" name="password1">
+        </div>
+        <div class="mb-3">
+            <label for="password2" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="password2" name="password2">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 {% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} Library User List {% endblock %}
+
+{% block content %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{ user.ID }}</td>
+        <td>{{ user.Name }}</td>
+        <td>{{ user.Email }}</td>
+        <td>{{ user.Password }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
