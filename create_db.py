@@ -14,4 +14,3 @@ def database_creation():
 if __name__ == '__main__':
     database_creation()
 
-
