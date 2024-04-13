@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, redirect
 
 __name__ = '__main__'
 
