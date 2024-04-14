@@ -26,7 +26,6 @@ def userlist():
     return render_template('userlist.html', users=users)
 
 
-
 #--------------------USER--------------------------------
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -56,7 +55,6 @@ def signup():
             flash(f'An error occured: {str(e)}')
             return render_template('signup.html')
     return render_template('signup.html')
-
 
 
 #----------------------ERROR PAGES--------------------------
