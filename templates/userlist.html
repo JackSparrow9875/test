@@ -10,15 +10,17 @@
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">Password</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
       {% for user in users %}
       <tr>
-        <td>{{ user.ID }}</td>
-        <td>{{ user.Name }}</td>
-        <td>{{ user.Email }}</td>
-        <td>{{ user.Password }}</td>
+        <td>{{ user[0] }}</td>
+        <td>{{ user[1] }}</td>
+        <td>{{ user[2] }}</td>
+        <td>{{ user[3] }}</td>
+        <td><button type="button" class="btn btn-danger"><a href="{{ url_for('deleteuser', id=user[0]) }}" style="text-decoration:none">Delete</a></button</td>
       </tr>
       {% endfor %}
     </tbody>

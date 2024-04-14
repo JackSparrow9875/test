@@ -1,10 +1,10 @@
-from flask import Flask, render_template, redirect, flash, request
+from flask import Flask, render_template, redirect, flash, request, url_for
 import sqlite3
 from datetime import datetime
 
 
 app = Flask(__name__)
-
+app.secret_key = 'Library'
 
 def get_db_cursor():
     conn = sqlite3.connect('Library')
@@ -50,11 +50,52 @@ def signup():
                 conn.close()
             else:
                 flash('Passwords donot match, please try again...')
-                return render_template('signup')
+                return render_template('signup.html')
         except Exception as e:
             flash(f'An error occured: {str(e)}')
             return render_template('signup.html')
     return render_template('signup.html')
+
+
+@app.route('/userlogin', methods=['POST', 'GET'])
+def login():
+    email = None
+    password = None
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        try:
+            conn = get_db_cursor()
+            c = conn.cursor()
+            c.execute('''SELECT * FROM Users WHERE Email = ?''', (email,))
+            user = c.fetchone()
+            if user is None:
+                flash('No user is found...')
+            elif user[3] != password:
+                flash('Incorrect password, please try again...')
+            else:
+                flash('Login successfull!')
+                return render_template('user_dashboard.html')
+        except Exception as e:
+            flash(f'An error occured: {str(e)}')
+            return redirect(url_for("index"))
+    return render_template('userlogin.html')
+
+
+@app.route('/user/delete/<int:id>')
+def deleteuser(id):
+    conn = get_db_cursor()
+    c = conn.cursor()
+    try:
+        c.execute('''DELETE FROM Users WHERE ID = ?''', (id,))
+        conn.commit()
+        flash('User has been deleted successfully. We are sad to see you leave')
+        return redirect(url_for('login'))
+    except Exception as e:
+        flash(f'An error has occured: {str(e)}')
+        return redirect(url_for("userlist"))
+    finally:
+        conn.close()
 
 
 #----------------------ERROR PAGES--------------------------

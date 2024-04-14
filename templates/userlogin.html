@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} User Login {% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+<div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <form action="{{ url_for('login') }}" method="POST">
+        <div class="mb-3">
+            <label for="email" class="form-label">Enter Your Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+        <label for="password" class="form-label">Enter Your Password</label>
+        <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

@@ -21,7 +21,7 @@ def create_users_table(conn):
         CREATE TABLE Users (
             ID INTEGER PRIMARY KEY AUTOINCREMENT,
             Name TEXT NOT NULL,
-            Email TEXT NOT NULL,
+            Email TEXT NOT NULL UNIQUE,
             Password TEXT NOT NULL
         )
     ''')
