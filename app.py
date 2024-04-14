@@ -75,7 +75,7 @@ def login():
                 flash('Incorrect password, please try again...')
             else:
                 flash('Login successfull!')
-                return render_template('user_dashboard.html')
+                return render_template('user_dashboard.html', user=user)
         except Exception as e:
             flash(f'An error occured: {str(e)}')
             return redirect(url_for("index"))
