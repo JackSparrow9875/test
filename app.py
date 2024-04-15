@@ -21,6 +21,12 @@ class Users(db.Model):
     Email = db.Column(db.String(128), unique=True, nullable=True)
     Password = db.Column(db.String(128), nullable=True)
 
+class Section(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    Sec_Name = db.Column(db.String(128), nullable=True)
+    Sec_Description = db.Column(db.Text(), nullable=True)
+    Sec_Date = db.Column(db.Date(), nullable=True)
+
 
 #------------------APP INTERFACE--------------------------
 @app.route('/')
