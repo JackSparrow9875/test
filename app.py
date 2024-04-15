@@ -53,7 +53,7 @@ def signup():
                 db.session.add(new_user)
                 db.session.commit()
                 flash('User added successfully')
-                return render_template('user_dashboard.html', new_user=new_user)
+                return render_template('user_dashboard.html', user=new_user)
             else:
                 flash('Passwords donot match, please try again...')
                 return render_template('signup.html')
