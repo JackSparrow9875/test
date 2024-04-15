@@ -4,10 +4,19 @@
 
 {% block content %}
 {% for message in get_flashed_messages() %}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+    {% if 'successfully' in message %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+        <div>{{ message }}</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+        <div>{{ message }}</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
 {% endfor %}
 
 <h1>Here's what I found</h1>
