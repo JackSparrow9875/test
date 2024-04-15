@@ -17,9 +17,9 @@ migrate = Migrate(app, db)
 #----------------------TABLES-----------------------------
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128), nullable=True)
-    email = db.Column(db.String(128), unique=True, nullable=True)
-    password = db.Column(db.String(128), nullable=True)
+    Name = db.Column(db.String(128), nullable=True)
+    Email = db.Column(db.String(128), unique=True, nullable=True)
+    Password = db.Column(db.String(128), nullable=True)
 
 
 #------------------APP INTERFACE--------------------------
@@ -49,10 +49,11 @@ def signup():
         try:
             if password1 == password2:
                 password = password1
-                new_user = Users(Name=name, Email=email, password=password)
+                new_user = Users(Name=name, Email=email, Password=password)
                 db.session.add(new_user)
                 db.session.commit()
                 flash('User added successfully')
+                return render_template('user_dashboard.html', new_user=new_user)
             else:
                 flash('Passwords donot match, please try again...')
                 return render_template('signup.html')
@@ -70,17 +71,14 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         try:
-            conn = get_db_cursor()
-            c = conn.cursor()
-            c.execute('''SELECT * FROM Users WHERE Email = ?''', (email,))
-            user = c.fetchone()
-            if user is None:
-                flash('No user is found...')
-            elif user[3] != password:
+            user_to_check = Users.query.filter_by(Email=email).first()
+            if user_to_check is None:
+                flash('No user was found...')
+            elif user_to_check.Password != password:
                 flash('Incorrect password, please try again...')
             else:
                 flash('Login successfull!')
-                return render_template('user_dashboard.html', user=user)
+                return render_template('user_dashboard.html', user=user_to_check)
         except Exception as e:
             flash(f'An error occured: {str(e)}')
             return redirect(url_for("index"))
@@ -89,18 +87,15 @@ def login():
 
 @app.route('/user/delete/<int:id>')
 def deleteuser(id):
-    conn = get_db_cursor()
-    c = conn.cursor()
+    user = Users.query.get_or_404(id)
     try:
-        c.execute('''DELETE FROM Users WHERE ID = ?''', (id,))
-        conn.commit()
+        db.session.delete(user)
+        db.session.commit()
         flash('User has been deleted successfully. We are sad to see you leave')
         return redirect(url_for('login'))
     except Exception as e:
         flash(f'An error has occured: {str(e)}')
-        return redirect(url_for("userlist"))
-    finally:
-        conn.close()
+        return redirect(url_for("userlist"))      
 
 
 #----------------------ERROR PAGES--------------------------
