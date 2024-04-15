@@ -1,14 +1,25 @@
 from flask import Flask, render_template, redirect, flash, request, url_for
-import sqlite3
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate 
 from datetime import datetime
 
 
 app = Flask(__name__)
 app.secret_key = 'Library'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Library.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-def get_db_cursor():
-    conn = sqlite3.connect('Library')
-    return conn
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+
+#----------------------TABLES-----------------------------
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), nullable=True)
+    email = db.Column(db.String(128), unique=True, nullable=True)
+    password = db.Column(db.String(128), nullable=True)
 
 
 #------------------APP INTERFACE--------------------------
@@ -19,10 +30,7 @@ def index():
 
 @app.route('/userlist')
 def userlist():
-    conn = get_db_cursor()
-    c = conn.cursor()
-    c.execute('''SELECT * FROM Users''')
-    users = c.fetchall()
+    users = Users.query.all()
     return render_template('userlist.html', users=users)
 
 
@@ -41,13 +49,10 @@ def signup():
         try:
             if password1 == password2:
                 password = password1
-                conn = get_db_cursor()
-                c = conn.cursor()
-                c.execute('''
-                          INSERT INTO Users (Name, Email, Password)
-                          VALUES (?,?,?)''', (name, email, password))
-                conn.commit()
-                conn.close()
+                new_user = Users(Name=name, Email=email, password=password)
+                db.session.add(new_user)
+                db.session.commit()
+                flash('User added successfully')
             else:
                 flash('Passwords donot match, please try again...')
                 return render_template('signup.html')
