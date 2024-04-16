@@ -27,6 +27,13 @@ class Section(db.Model):
     Sec_Description = db.Column(db.Text(), nullable=True)
     Sec_Date = db.Column(db.Date(), nullable=True)
 
+class Books(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    Book_name = db.Column(db.String(128), nullable=True)
+    Book_content = db.Column(db.String(512), nullable=True)
+    Book_author = db.Column(db.String(128), nullable=True)
+    Date_issued = db.Column(db.Date(), nullable=True)
+    Return_date = db.Column(db.Date(), nullable=True)
 
 #------------------APP INTERFACE--------------------------
 @app.route('/')
