@@ -35,6 +35,7 @@ class Books(db.Model):
     Date_issued = db.Column(db.Date(), nullable=True)
     Return_date = db.Column(db.Date(), nullable=True)
 
+
 #------------------APP INTERFACE--------------------------
 @app.route('/')
 def index():
