@@ -27,23 +27,23 @@ migrate = Migrate(app, db)
 #----------------------TABLES-----------------------------
 class Users(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    Name = db.Column(db.String(128), nullable=True)
-    Email = db.Column(db.String(128), unique=True, nullable=True)
-    Password = db.Column(db.String(128), nullable=True)
+    Name = db.Column(db.String(128))
+    Email = db.Column(db.String(128), unique=True)
+    Password = db.Column(db.String(128))
 
 class Section(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    Sec_Name = db.Column(db.String(128), nullable=True)
-    Sec_Description = db.Column(db.Text(), nullable=True)
-    Sec_Date = db.Column(db.Date(), nullable=True)
+    Sec_Name = db.Column(db.String(128))
+    Sec_Description = db.Column(db.Text())
+    Sec_Date = db.Column(db.Date())
 
 class Books(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    Book_name = db.Column(db.String(128), nullable=True)
-    Book_content = db.Column(db.String(512), nullable=True)
-    Book_author = db.Column(db.String(128), nullable=True)
-    Date_issued = db.Column(db.Date(), nullable=True)
-    Return_date = db.Column(db.Date(), nullable=True)
+    Book_name = db.Column(db.String(128))
+    Book_content = db.Column(db.String(512))
+    Book_author = db.Column(db.String(128))
+    Date_issued = db.Column(db.Date())
+    Return_date = db.Column(db.Date())
 
 
 #------------------APP INTERFACE--------------------------
@@ -143,6 +143,20 @@ def deleteuser(id):
 @app.route('/admin/dashboard')
 def admin():
     return render_template('admin.html')
+
+
+@app.route('/admin/add_section', methods=['GET','POST'])
+def add_section():
+    sec_name = None
+    sec_description = None
+    sec_date = None
+    if request.method == 'POST':
+        sec_name = request.form.get('sec_name')
+        sec_description = request.form.get('sec_description')
+        # sec_date =
+        try:
+
+    return render_template('add_section.html')
 
 
 #----------------------ERROR PAGES--------------------------
