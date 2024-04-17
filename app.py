@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, flash, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate 
+import flask_login
 from datetime import datetime
 
 
@@ -8,6 +9,9 @@ app = Flask(__name__)
 app.secret_key = 'Library'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Library.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
 
 
 db = SQLAlchemy(app)
