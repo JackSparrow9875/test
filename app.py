@@ -33,7 +33,7 @@ class Users(UserMixin, db.Model):
 
 class Section(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    Sec_Name = db.Column(db.String(128))
+    Sec_Name = db.Column(db.String(128), unique=True)
     Sec_Description = db.Column(db.Text())
     Sec_Date = db.Column(db.Date())
 
@@ -155,7 +155,14 @@ def add_section():
         sec_description = request.form.get('sec_description')
         # sec_date =
         try:
-
+            new_sec = Section(Sec_Name=sec_name, Sec_Description=sec_description, Sec_Date=sec_date)
+            db.session.add(new_sec)
+            db.session.commit()
+            flash('New Section added successfully')
+            return redirect(url_for('admin'))
+        except Exception as e:
+            flash(f'An error occured: {str(e)}')
+            return render_template('add_section.html')
     return render_template('add_section.html')
 
 
