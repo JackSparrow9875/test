@@ -113,6 +113,14 @@ def login():
     return render_template('userlogin.html')
 
 
+@app.route('/logout')
+@login_required
+def logout():
+    flask_login.logout_user()
+    flash('Logout successful')
+    return redirect(url_for('index'))
+
+
 @app.route('/user/delete/<int:id>')
 @login_required
 def deleteuser(id):
