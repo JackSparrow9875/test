@@ -1,0 +1,28 @@
+{% extends 'base.html %}
+
+{% block title %} Section List {% endblock %}
+
+{% block content %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Section Name</th>
+        <th scope="col">Section Description</th>
+        <th scope="col">Date Added</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for section in sections %}
+      <tr>
+        <td>{{ section.id }}</td>
+        <td>{{ section.Sec_Name }}</td>
+        <td>{{ section.Sec_Description }}</td>
+        <td>{{ section.Sec_Date }}</td>
+        <td><button type="button" class="btn btn-danger"><a href="{{ url_for('deletesection', id=section.id) }}" style="text-decoration:none">Delete</a></button</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

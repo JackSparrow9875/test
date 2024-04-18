@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import flask_login 
 from flask_login import LoginManager, UserMixin, login_required, current_user
-from datetime import datetime
+from datetime import date
 
 
 app = Flask(__name__)
@@ -56,6 +56,12 @@ def index():
 def userlist():
     users = Users.query.all()
     return render_template('userlist.html', users=users)
+
+
+@app.route('/section_list')
+def sectionlist():
+    sections = Section.query.all()
+    return render_template('sectionlist.html', sections=sections)
 
 
 #--------------------USER--------------------------------
@@ -155,7 +161,7 @@ def add_section():
     if request.method == 'POST':
         sec_name = request.form.get('sec_name')
         sec_description = request.form.get('sec_description')
-        # sec_date =
+        sec_date = date.today()
         try:
             new_sec = Section(Sec_Name=sec_name, Sec_Description=sec_description, Sec_Date=sec_date)
             db.session.add(new_sec)
@@ -166,6 +172,9 @@ def add_section():
             flash(f'An error occured: {str(e)}')
             return render_template('add_section.html')
     return render_template('add_section.html')
+
+
+# @app.route
 
 
 #----------------------ERROR PAGES--------------------------
