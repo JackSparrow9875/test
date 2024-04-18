@@ -3,6 +3,16 @@
 {% block title %} Section List {% endblock %}
 
 {% block content %}
+{% for message in get_flashed_messages() %}
+{% if current_user.Email == 'admin@mail.com' %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    <div>{{ message }}</div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% endfor %}
+
 <table class="table">
     <thead>
       <tr>

@@ -154,6 +154,7 @@ def admin():
 
 
 @app.route('/admin/add_section', methods=['GET','POST'])
+@login_required
 def add_section():
     sec_name = None
     sec_description = None
@@ -174,7 +175,22 @@ def add_section():
     return render_template('add_section.html')
 
 
-# @app.route
+@app.route('/admin/delete_section/<int:id>')
+@login_required
+def deletesection(id):
+    section = Section.query.get_or_404(id)
+    if current_user.Email == 'admin@mail.com':
+        try:
+            db.session.delete(section)
+            db.session.commit()
+            flash('Section deleted successfully')
+            return redirect('admin')
+        except Exception as e:
+            sections = Section.query.all()
+            flash('An error occured, try again...')
+            return redirect(url_for('sectionlist', sections=sections))
+    else:
+        return redirect(url_for('unauthorized'))
 
 
 #----------------------ERROR PAGES--------------------------
