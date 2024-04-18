@@ -102,9 +102,11 @@ def login():
                 flash('Incorrect password, please try again...')
             else:
                 if user_to_check.Email == 'admin@mail.com':
+                    flask_login.login_user(user_to_check)
                     flash('Login successfull!')
                     return redirect(url_for('admin'))
                 else:
+                    flask_login.login_user(user_to_check)
                     flash('Login successfull!')
                     return render_template('user_dashboard.html', user=user_to_check)
         except Exception as e:
@@ -118,7 +120,7 @@ def login():
 def logout():
     flask_login.logout_user()
     flash('Logout successful')
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 
 @app.route('/user/delete/<int:id>')
