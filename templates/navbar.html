@@ -7,9 +7,14 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           {% if current_user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for('logout') }}">Logout</a>
-          </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{ url_for('logout') }}">Logout</a>
+            </li>
+            {% if current_user.Email == 'admin@mail.com' %}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{ url_for('add_section') }}">Add Section</a>
+            </li>
+            {% endif %}
           {% else %}
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ url_for('signup') }}">Signup</a>
