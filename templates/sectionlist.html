@@ -4,7 +4,7 @@
 
 {% block content %}
 {% for message in get_flashed_messages() %}
-{% if current_user.Email == 'admin@mail.com' %}
+{% if current_user.Email == "admin@mail.com" %}
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
     <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
     <div>{{ message }}</div>
@@ -14,25 +14,25 @@
 {% endfor %}
 
 <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Section Name</th>
-        <th scope="col">Section Description</th>
-        <th scope="col">Date Added</th>
-        <th scope="col">Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for section in sections %}
-      <tr>
-        <td>{{ section.id }}</td>
-        <td>{{ section.Sec_Name }}</td>
-        <td>{{ section.Sec_Description }}</td>
-        <td>{{ section.Sec_Date }}</td>
-        <td><button type="button" class="btn btn-danger"><a href="{{ url_for('deletesection', id=section.id) }}" style="text-decoration:none">Delete</a></button</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Section Name</th>
+      <th scope="col">Section Description</th>
+      <th scope="col">Date Added</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for section in sections %}
+    <tr>
+      <td>{{ section.id }}</td>
+      <td>{{ section.Sec_Name }}</td>
+      <td>{{ section.Sec_Description }}</td>
+      <td>{{ section.Sec_Date }}</td>
+      <td><a href='{{ url_for("deletesection", id=section.id) }}'></a></td>     
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
