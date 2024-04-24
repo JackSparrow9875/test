@@ -190,7 +190,7 @@ def deletesection(id):
             flash('An error occured, try again...')
             return redirect(url_for('sectionlist', sections=sections))
     else:
-        return redirect(url_for('unauthorized'))
+        return redirect(url_for('sectionlist'))
 
 
 #----------------------ERROR PAGES--------------------------
